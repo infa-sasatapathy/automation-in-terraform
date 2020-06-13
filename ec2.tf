@@ -155,17 +155,7 @@ resource "aws_s3_bucket_object" "file_upload" {
   source = "image.jpg"
 
 }
-######
-resource "aws_s3_bucket_object" "file_upload_2" {
-  depends_on = [
-    aws_s3_bucket.bucket,
-  ]
-  bucket = "saumik-test-bucket"
-  key    = "index.php"
-  source = "index.php"
 
-}
-######
 resource "aws_cloudfront_distribution" "cf_distribution" {
   origin {
     domain_name = aws_s3_bucket.bucket.bucket_regional_domain_name
