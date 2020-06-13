@@ -5,7 +5,7 @@ provider "aws" {
 
 resource "aws_key_pair" "key" {
   key_name   = "mykey12345"
-  public_key = file("/Users/saumik/Downloads/terraform-practice/ec2/mykey12345.pub")
+  public_key = file("mykey12345.pub")
 }
 
 resource "aws_security_group" "web-sg" {
@@ -47,7 +47,7 @@ resource "aws_instance" "myinstance" {
   connection {
     type        = "ssh"
     user        = "ec2-user"
-    private_key = file("/Users/saumik/Downloads/terraform-practice/ec2/mykey12345")
+    private_key = file("mykey12345")
     host        = aws_instance.myinstance.public_ip
   }
 
@@ -63,11 +63,11 @@ resource "aws_instance" "myinstance" {
     Name = "SaumikOS"
   }
 }
-
+/*
 output "InstanceAZ" {
   value = aws_instance.myinstance.availability_zone
 }
-
+*/
 output "InstancePIP" {
   value = aws_instance.myinstance.public_ip
 }
@@ -80,11 +80,11 @@ resource "aws_ebs_volume" "ebs_attachment" {
     Name = "New EBS"
   }
 }
-
+/*
 output "VolumeInfo" {
   value = aws_ebs_volume.ebs_attachment.id
 }
-
+*/
 resource "aws_volume_attachment" "ebs_attachment" {
   device_name  = "/dev/sdb"
   volume_id    = aws_ebs_volume.ebs_attachment.id
@@ -144,9 +144,12 @@ resource "aws_s3_bucket" "bucket" {
     Environment = "prod"
   }
 }
+/*
 output "s3" {
   value = aws_s3_bucket.bucket.bucket_regional_domain_name
 }
+*/
+
 resource "aws_s3_bucket_object" "file_upload" {
   depends_on = [
     aws_s3_bucket.bucket,
@@ -198,11 +201,11 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
     cloudfront_default_certificate = true
   }
 }
-
+/*
 output "CLoudFrontURL" {
   value = aws_cloudfront_distribution.cf_distribution.domain_name
 }
-
+*/
 resource "aws_s3_bucket_policy" "policy" {
   bucket = aws_s3_bucket.bucket.id
   policy = <<POLICY
