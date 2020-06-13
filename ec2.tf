@@ -131,6 +131,7 @@ resource "null_resource" "remote-1" {
     inline = [
       "sudo git clone https://github.com/saumik8763/cloud-practice.git /var/www/html",
       "sudo systemctl restart httpd",
+      "sudo sed -i 's/cfid/${aws_cloudfront_distribution.cf_distribution.domain_name}/g' /var/www/html/index.html",
     ]
   }
 }
@@ -155,7 +156,6 @@ resource "aws_s3_bucket_object" "file_upload" {
   source = "image.jpg"
 
 }
-
 resource "aws_cloudfront_distribution" "cf_distribution" {
   origin {
     domain_name = aws_s3_bucket.bucket.bucket_regional_domain_name
