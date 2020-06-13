@@ -106,7 +106,7 @@ resource "null_resource" "remote" {
   connection {
     type        = "ssh"
     user        = "ec2-user"
-    private_key = file("/Users/saumik/Downloads/terraform-practice/ec2/mykey12345")
+    private_key = file("mykey12345")
     host        = aws_instance.myinstance.public_ip
   }
   provisioner "remote-exec" {
@@ -124,7 +124,7 @@ resource "null_resource" "remote-1" {
   connection {
     type        = "ssh"
     user        = "ec2-user"
-    private_key = file("/Users/saumik/Downloads/terraform-practice/ec2/mykey12345")
+    private_key = file("mykey12345")
     host        = aws_instance.myinstance.public_ip
   }
   provisioner "remote-exec" {
